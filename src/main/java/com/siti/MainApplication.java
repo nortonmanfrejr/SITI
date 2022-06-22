@@ -1,13 +1,12 @@
 package com.siti;
 
-import com.siti.connection.ConnectionFactory;
+import com.siti.service.lBox;
 import com.siti.service.Display;
-import com.siti.view.Botoes;
 import javafx.application.Application;
+
+import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,18 +22,18 @@ public class MainApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+
         window = stage;
+        Scene scene = new Scene(new Group(), 450, 250);
         window.setTitle("SITI....");
         window.setResizable(false);
 
         //#region Montagem de layout
-
         BorderPane bp = new BorderPane();
-        bp.setLeft(Botoes.buttons());
+        bp.setLeft(lBox.leftBox());
 
 
 
-        Scene fixedLayout = new Scene(bp, 1000,460);
         //endregion
 
         //#region Functions called
@@ -44,8 +43,11 @@ public class MainApplication extends Application {
         });
         //endregion
 
-        window.setScene(fixedLayout);
+        Group root = (Group) scene.getRoot();
+        root.getChildren().addAll(bp);
+        window.setScene(scene);
         window.show();
+
     }
 
 
