@@ -1,13 +1,14 @@
 package com.siti;
 
-import com.siti.service.lBox;
 import com.siti.service.Display;
+import com.siti.view.BPhud;
 import javafx.application.Application;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -24,17 +25,9 @@ public class MainApplication extends Application {
     public void start(Stage stage) throws IOException {
 
         window = stage;
-        Scene scene = new Scene(new Group(), 450, 250);
+        Scene scene = new Scene(new Group(), 1280, 600);
         window.setTitle("SITI....");
         window.setResizable(false);
-
-        //#region Montagem de layout
-        BorderPane bp = new BorderPane();
-        bp.setLeft(lBox.leftBox());
-
-
-
-        //endregion
 
         //#region Functions called
         window.setOnCloseRequest( e -> {
@@ -44,10 +37,10 @@ public class MainApplication extends Application {
         //endregion
 
         Group root = (Group) scene.getRoot();
-        root.getChildren().addAll(bp);
+        root.getChildren().addAll(BPhud.hud());
         window.setScene(scene);
         window.show();
-
+        setUserAgentStylesheet(STYLESHEET_CASPIAN);
     }
 
 
