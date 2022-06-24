@@ -1,14 +1,13 @@
 package com.siti;
 
+import com.siti.connection.ConnectionFactory;
 import com.siti.service.Display;
 import com.siti.view.BPhud;
 import javafx.application.Application;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -21,9 +20,12 @@ public class MainApplication extends Application {
 
     Stage window;
 
+    /**
+     * principal stage of application
+     * */
     @Override
     public void start(Stage stage) throws IOException {
-
+        ConnectionFactory.getConnection();
         window = stage;
         Scene scene = new Scene(new Group(), 1280, 600);
         window.setTitle("SITI....");
@@ -41,6 +43,7 @@ public class MainApplication extends Application {
         window.setScene(scene);
         window.show();
         setUserAgentStylesheet(STYLESHEET_CASPIAN);
+        ConnectionFactory.closeConnection();
     }
 
 
