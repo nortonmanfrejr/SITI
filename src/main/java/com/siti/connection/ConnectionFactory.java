@@ -16,6 +16,7 @@ public class ConnectionFactory {
     public static Connection getConnection(){
 
         dbCreate();
+        tbMonitor();
 
         /**
          * connect in database inventory case exists
@@ -23,7 +24,7 @@ public class ConnectionFactory {
 
         try{
 
-            connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory","root","");
+            connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbSITI","root","");
             return connect;
 
         } catch (SQLException error){
@@ -52,12 +53,47 @@ public class ConnectionFactory {
         }
     }
 
+
+    /**
+     * create lists of monitors in inventory database case not exists
+     * */
+    public static void tbMonitor(){
+
+        String command = "CREATE TABLE IF NOT EXISTS tbMonitor (\n" +
+                "    id INTEGER PRIMARY KEY AUTO_INCREMENT,\n" +
+                "    patrimonio INTEGER UNIQUE,\n" +
+                "    serviceTag TEXT UNIQUE,\n" +
+                "    marca VARCHAR (20),\n" +
+                "    modelo VARCHAR (50),\n" +
+                "    departamento VARCHAR (50),\n" +
+                "    setor VARCHAR (30),\n" +
+                "    ajustavel VARCHAR (5),\n" +
+                "    andar VARCHAR(30),\n" +
+                "    observacao TEXT\n" +
+                ")";
+        try {
+
+            connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbSITI","root","");
+            pst = connect.prepareStatement(command);
+            int create = pst.executeUpdate();
+
+        } catch (Exception e) {
+
+            Display.display("Not found", "Server not found");
+
+        } finally {
+
+            closeConnection();
+
+        }
+    }
+
     /**
      * create database inventory case not exists
      */
     private static void dbCreate(){
 
-        String command = "CREATE DATABASE IF NOT EXISTS inventory";
+        String command = "CREATE DATABASE IF NOT EXISTS dbSITI";
 
         try{
 

@@ -28,6 +28,12 @@ public class BPhud{
     private static Button create(){
         Button b = new Button("Create...");
         b.setPrefWidth(100);
+
+        b.setOnAction(e -> {
+            if (tipo.getValue().equals("Monitor")) {
+                MonitorDAO.createCommand();
+            }
+        });
         return b;
     }
 
@@ -40,7 +46,7 @@ public class BPhud{
         b.setOnAction(e -> {
 
             if (tipo.getValue().equals("Monitor")) {
-                MonitorDAO.readMonitor();
+
             } else {
                 notfound();
             }

@@ -15,15 +15,15 @@ public class MonitorHUD {
 
     static Separator vertical = new Separator(Orientation.VERTICAL);
     static Separator horizontal = new Separator(Orientation.HORIZONTAL);
-    static ComboBox<String> cbModelo;
-    static ComboBox<String> cbMarca;
+    public static ComboBox<String> cbModelo;
+    public static ComboBox<String> cbMarca;
     public static TextField txfPatrimonio;
-    static TextField txfservicetag;
-    static ComboBox<String> departamento;
-    static ComboBox<String> setor;
-    static ComboBox<String> cbAjustavel;
-    static ComboBox<String> cbAndar;
-    static TextArea observacao;
+    public static TextField txfservicetag;
+    public static ComboBox<String> departamento;
+    public static ComboBox<String> setor;
+    public static ComboBox<String> cbAjustavel;
+    public static ComboBox<String> cbAndar;
+    public static TextArea observacao;
 
 
 
@@ -31,7 +31,6 @@ public class MonitorHUD {
      * @return quantity monitors in active, waste, inventory and maintenance
      * */
     public static VBox quantity(){
-
 
 
         Label l = new Label("Quantidade de Monitores");
@@ -72,6 +71,7 @@ public class MonitorHUD {
         departamento = new ComboBox<>(); // Adicionar na h3
         departamento.setPrefWidth(180);
         departamento.setPromptText("Departamento");
+        departamento.getItems().addAll("Laboratorios","Direcao");
         departamento.getSelectionModel().selectedItemProperty().addListener((options,oldValue,newValue) ->{
             System.out.println(newValue);
         });
@@ -79,9 +79,8 @@ public class MonitorHUD {
         setor = new ComboBox<>(); // Adicionar na h4
         setor.setPrefWidth(180);
         setor.setPromptText("Setor");
-        setor.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) ->{
-            System.out.println(newValue);
-        });
+        setor.getItems().addAll("Redacao 1","Redacao 2","Redacao 3","Redacao 4","Tesouraria","Secretaria","Sala Professores");
+
 
         HBox h1 = new HBox(5);
         h1.getChildren().addAll(patrimonio,txfPatrimonio); // Box de patrimonio
@@ -135,9 +134,7 @@ public class MonitorHUD {
         cbAndar = new ComboBox<>();
         cbAndar.setPromptText("Andar...");
         cbAndar.setPrefWidth(104);
-        cbAndar.getSelectionModel().selectedItemProperty().addListener((options,oldValue,newValue) ->{
-            System.out.println(newValue);
-        });
+        cbAndar.getItems().addAll("6");
 
 
         HBox h5 = new HBox(5);
