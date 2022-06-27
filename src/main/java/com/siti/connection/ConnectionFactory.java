@@ -69,7 +69,8 @@ public class ConnectionFactory {
                 "    setor VARCHAR (30),\n" +
                 "    ajustavel VARCHAR (5),\n" +
                 "    andar VARCHAR(30),\n" +
-                "    observacao TEXT\n" +
+                "    observacao TEXT,\n" +
+                "    tipo VARCHAR(20)" +
                 ")";
         try {
 

@@ -1,18 +1,18 @@
 package com.siti.view;
 
-import com.siti.connection.MonitorDAO;
+import com.siti.dao.DMonitor;
 import com.siti.model.Monitor;
 import com.siti.service.Display;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class BPhud{
+public class MainHUD {
 
 
 
@@ -31,7 +31,7 @@ public class BPhud{
 
         b.setOnAction(e -> {
             if (tipo.getValue().equals("Monitor")) {
-                MonitorDAO.createCommand();
+                DMonitor.createCommand();
             }
         });
         return b;
@@ -44,13 +44,9 @@ public class BPhud{
         Button b = new Button("Read...");
         b.setPrefWidth(100);
         b.setOnAction(e -> {
-
-            if (tipo.getValue().equals("Monitor")) {
-
-            } else {
-                notfound();
-            }
-
+            e.consume();
+            obterMonitor();
+//            DMonitor.obtainAll();
         });
         return b;
     }
@@ -99,8 +95,8 @@ public class BPhud{
                 selectedItemProperty().
                 addListener((options,oldValue,newValue) -> {
                     if(newValue.equals("Monitor")){
-                        bp.setCenter(MonitorHUD.monitor());
-                        bp.setBottom(MonitorHUD.listas());
+                        bp.setCenter(HMonitor.monitor());
+                        bp.setBottom(HMonitor.tabs());
                     } else if (newValue.equals("Computador")) {
                       Display.display("Computer not created", "Computer not created");
                     } else if (newValue.equals("Conjunto")) {
@@ -126,7 +122,7 @@ public class BPhud{
         // count box
 
         HBox countBox = new HBox();
-        countBox.getChildren().addAll(new Separator(Orientation.VERTICAL),MonitorHUD.quantity());
+        countBox.getChildren().addAll(new Separator(Orientation.VERTICAL));
         bp.setRight(countBox);
 
         bp.setLeft(hbuttons);
@@ -137,6 +133,12 @@ public class BPhud{
     private static boolean notfound(){
        Boolean answer = Display.display("Não encontrado", "Monitor não encontrado.");
        return answer;
+    }
+
+    public static ObservableList<Monitor> obterMonitor(){
+
+        ObservableList<Monitor> list = FXCollections.observableArrayList();
+        return list;
     }
 
 }

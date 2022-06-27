@@ -1,8 +1,8 @@
 package com.siti.model;
 
-import com.siti.view.MonitorHUD;
+import com.siti.view.HMonitor;
 
-public class Monitor extends MonitorHUD {
+public class Monitor extends HMonitor {
 
     //#region atributos
 
@@ -16,6 +16,7 @@ public class Monitor extends MonitorHUD {
     public String ajustavel;
     public String andar;
     public String observacao;
+    public String tipo;
     //endregion
 
     //#region construtor
@@ -29,7 +30,8 @@ public class Monitor extends MonitorHUD {
                    String setor,
                    String ajustavel,
                    String andar,
-                   String observacao){
+                   String observacao,
+                   String tipo){
         this.id = id;
         this.patrimonio = patrimonio;
         this.servicetag = servicetag;
@@ -40,6 +42,7 @@ public class Monitor extends MonitorHUD {
         this.ajustavel = ajustavel;
         this.andar = andar;
         this.observacao = observacao;
+        this.tipo = tipo;
 
     }
     //endregion
@@ -125,6 +128,15 @@ public class Monitor extends MonitorHUD {
     public void setObservacao(String observacao) {
         this.observacao = observacao;
     }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
     //endregion
 
 }

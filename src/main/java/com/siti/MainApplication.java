@@ -2,7 +2,7 @@ package com.siti;
 
 import com.siti.connection.ConnectionFactory;
 import com.siti.service.Display;
-import com.siti.view.BPhud;
+import com.siti.view.MainHUD;
 import javafx.application.Application;
 
 import javafx.scene.Group;
@@ -39,7 +39,7 @@ public class MainApplication extends Application {
         //endregion
 
         Group root = (Group) scene.getRoot();
-        root.getChildren().addAll(BPhud.hud());
+        root.getChildren().addAll(MainHUD.hud());
         window.setScene(scene);
         window.show();
         setUserAgentStylesheet(STYLESHEET_CASPIAN);
