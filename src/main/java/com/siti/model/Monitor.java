@@ -17,7 +17,6 @@ public class Monitor extends HMonitor {
     public String andar;
     public String observacao;
     public String tipo;
-
     public String estado;
     //endregion
 
@@ -73,6 +72,10 @@ public class Monitor extends HMonitor {
         this.tipo = tipo;
         this.estado = estado;
 
+    }
+
+    public Monitor() {
+        super();
     }
     //endregion
 
@@ -175,5 +178,28 @@ public class Monitor extends HMonitor {
     }
 
     //endregion
+
+    //#region toString
+
+    @Override
+    public String toString() {
+        return "Monitor{" +
+                "id=" + id +
+                ", patrimonio=" + patrimonio +
+                ", servicetag='" + servicetag + '\'' +
+                ", marca='" + marca + '\'' +
+                ", modelo='" + modelo + '\'' +
+                ", departamento='" + departamento + '\'' +
+                ", setor='" + setor + '\'' +
+                ", ajustavel='" + ajustavel + '\'' +
+                ", andar='" + andar + '\'' +
+                ", observacao='" + observacao + '\'' +
+                ", tipo='" + tipo + '\'' +
+                ", estado='" + estado + '\'' +
+                '}';
+    }
+    //endregion
+
+
 
 }

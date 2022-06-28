@@ -42,7 +42,7 @@ public class MainHUD {
             Button b = new Button("Read...");
             b.setPrefWidth(100);
             b.setOnAction(e -> {
-                DMonitor.obterMonitor();
+                DMonitor.obterMonitor().toArray();
             });
 
             return b;
@@ -131,10 +131,8 @@ public class MainHUD {
        return answer;
     }
 
-    public static ObservableList<Monitor> obterMonitor(){
-
-        ObservableList<Monitor> list = FXCollections.observableArrayList();
-        return list;
+    private static ObservableList<Monitor> obter(){
+        ObservableList<Monitor> monitor = FXCollections.observableArrayList();
+        return monitor;
     }
-
 }

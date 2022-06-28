@@ -2,7 +2,6 @@ package com.siti.dao;
 
 import com.siti.connection.ConnectionFactory;
 import com.siti.model.Monitor;
-import com.siti.service.Display;
 import com.siti.view.HMonitor;
 import com.siti.view.MainHUD;
 import javafx.collections.FXCollections;
@@ -11,6 +10,8 @@ import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DMonitor {
 
@@ -18,53 +19,42 @@ public class DMonitor {
     //#region obter  monitor
     /**
      * @return a observable list of monitors.
-     * */
+     */
     public static ObservableList<Monitor> obterMonitor(){
 
         ObservableList<Monitor> monitors = FXCollections.observableArrayList();
+
+        ConnectionFactory.getConnection();
         ResultSet rs = null;
         PreparedStatement pst = null;
-
-        String command1 = "SELECT * FROM tbMonitor WHERE patrimonio = ?";
-        String command2 = "SELECT * FROM tbMonitor WHERE servicetag = ?";
+        String command = "SELECT * FROM tbMonitor;";
 
         try {
 
 
-            pst = ConnectionFactory.getConnection().prepareStatement(command1);
+            pst = ConnectionFactory.getConnection().prepareStatement(command);
             rs = pst.executeQuery();
 
 
             while(rs.next()){
 
-                // jogando para detalhes
+                Monitor monitor = new Monitor();
 
-                HMonitor.lblTipo.setText(HMonitor.lblTipo.getText() + rs.getString("tipo"));
-                HMonitor.lblPatrimonio.setText(HMonitor.lblPatrimonio.getText() + rs.getInt("patrimonio"));
-                HMonitor.lblServicetag.setText(HMonitor.lblServicetag.getText() + rs.getString("servicetag"));
-                HMonitor.lblAndar.setText(HMonitor.lblAndar.getText() + rs.getString("andar"));
-                HMonitor.lblDepartamento.setText(HMonitor.lblDepartamento.getText() + rs.getString("departamento"));
-                HMonitor.lblSetor.setText(HMonitor.lblSetor.getText() + rs.getString("setor"));
-                HMonitor.lblMarca.setText(HMonitor.lblMarca.getText() + rs.getString("marca"));
-                HMonitor.lblModelo.setText(HMonitor.lblModelo.getText() + rs.getString("modelo"));
-                HMonitor.lblObs.setText(HMonitor.lblObs.getText() + rs.getString("observacao"));
-                HMonitor.lblStatus.setText(HMonitor.lblStatus.getText() + rs.getString("estado"));
+                monitor.setId(rs.getInt("id"));
+                monitor.setPatrimonio(rs.getInt("patrimonio"));
+                monitor.setServicetag(rs.getString("serviceTag"));
+                monitor.setMarca(rs.getString("marca"));
+                monitor.setModelo(rs.getString("modelo"));
+                monitor.setDepartamento(rs.getString("departamento"));
+                monitor.setSetor(rs.getString("setor"));
+                monitor.setAjustavel(rs.getString("ajustavel"));
+                monitor.setAndar(rs.getString("andar"));
+                monitor.setObservacao(rs.getString("observacao"));
+                monitor.setTipo(rs.getString("tipo"));
+                monitor.setEstado(rs.getString("estado"));
 
-                monitors.add(new Monitor(
-                        rs.getInt(1),
-                        rs.getInt(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getString(8),
-                        rs.getString(9),
-                        rs.getString(10),
-                        rs.getString(11),
-                        rs.getString(12)));
-
-                HMonitor.tableV.setItems(monitors);
+                monitors.add(monitor);
+                System.out.println("teste = " + monitor);
 
             }
 

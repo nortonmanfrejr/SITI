@@ -1,5 +1,6 @@
 package com.siti.view;
 
+import com.siti.dao.DMonitor;
 import com.siti.model.Monitor;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -167,69 +168,77 @@ public class HMonitor {
     public static TableColumn<Monitor, String> columnModelo; // modelo
     public static TableColumn<Monitor, String> columnObservacao; // obs
     public static TableColumn<Monitor,String> columnStatus; // status
+    public static TableColumn<Monitor, String> columnAjustavel;
 
     /**
      * @return tableview contains all data monitors
      * */
-    private static TableView<Monitor> table(){
+    public static TableView<Monitor> table(){
 
         columnTipo = new TableColumn<>("Tipo");
         columnTipo.setPrefWidth(100);
-        columnTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
-
-        columnPatrimonio = new TableColumn<>("Patrimonio");
-        columnPatrimonio.setPrefWidth(150);
-        columnPatrimonio.setCellValueFactory(new PropertyValueFactory<>("patrimonio"));
+        columnTipo.setCellValueFactory(new PropertyValueFactory<Monitor, String>("tipo"));
 
 
-        columnST = new TableColumn<>("Service Tag");
-        columnST.setPrefWidth(150);
-        columnST.setCellValueFactory(new PropertyValueFactory<>("servicetag"));
+//        columnPatrimonio = new TableColumn<>("Patrimonio");
+//        columnPatrimonio.setPrefWidth(150);
+//        columnPatrimonio.setCellValueFactory(new PropertyValueFactory<Monitor, Integer>("patrimonio"));
+//
+//
+//        columnST = new TableColumn<>("Service Tag");
+//        columnST.setPrefWidth(150);
+//        columnST.setCellValueFactory(new PropertyValueFactory<Monitor, String>("servicetag"));
+//
+//        TableColumn<Monitor, TableColumn> columnIdentificacao = new TableColumn<>("Identificação");
+//        columnIdentificacao.setPrefWidth(300);
+//        columnIdentificacao.getColumns().addAll(columnPatrimonio,columnST);
+//
+//        columnAndar = new TableColumn<>("Andar");
+//        columnAndar.setPrefWidth(100);
+//        columnAndar.setCellValueFactory(new PropertyValueFactory<Monitor, String>("andar"));
+//
+//        columnDepartamento = new TableColumn<>("Departamento");
+//        columnDepartamento.setPrefWidth(100);
+//        columnDepartamento.setCellValueFactory(new PropertyValueFactory<Monitor, String>("departamento"));
+//
+//        columnSetor = new TableColumn<>("Setor");
+//        columnSetor.setPrefWidth(100);
+//        columnSetor.setCellValueFactory(new PropertyValueFactory<Monitor, String>("setor"));
+//
+//        TableColumn<Monitor, String> columnLocalizacao = new TableColumn<Monitor, String>("Localização");
+//        columnLocalizacao.setPrefWidth(300);
+//        columnLocalizacao.getColumns().addAll(columnAndar,columnDepartamento,columnSetor);
+//
+//        columnMarca = new TableColumn<>("Marca");
+//        columnMarca.setPrefWidth(100);
+//        columnMarca.setCellValueFactory(new PropertyValueFactory<Monitor, String>("marca"));
+//
+//        columnModelo = new TableColumn<>("Modelo");
+//        columnModelo.setPrefWidth(100);
+//        columnModelo.setCellValueFactory(new PropertyValueFactory<Monitor, String>("modelo"));
+//
+//        columnAjustavel = new TableColumn<>("Ajustavel");
+//        columnAjustavel.setPrefWidth(100);
+//        columnAjustavel.setCellValueFactory(new PropertyValueFactory<Monitor, String>("ajustavel"));
+//
+//        TableColumn<Monitor,String> columnFornecedor = new TableColumn<Monitor, String>("Maquina");
+//        columnFornecedor.setPrefWidth(300);
+//        columnFornecedor.getColumns().addAll(columnMarca,columnModelo,columnAjustavel);
+//
+//        columnObservacao = new TableColumn<>("Observação");
+//        columnObservacao.setPrefWidth(150);
+//        columnObservacao.setCellValueFactory(new PropertyValueFactory<Monitor, String>("observacao"));
+//
+//        columnStatus = new TableColumn<>("Status");
+//        columnStatus.setPrefWidth(100);
+//        columnStatus.setCellValueFactory(new PropertyValueFactory<Monitor, String>("status"));
 
-        TableColumn<Monitor, TableColumn> columnIdentificacao = new TableColumn<>("Identificação");
-        columnIdentificacao.setPrefWidth(300);
-        columnIdentificacao.getColumns().addAll(columnPatrimonio,columnST);
 
-        columnAndar = new TableColumn<>("Andar");
-        columnAndar.setPrefWidth(100);
-        columnAndar.setCellValueFactory(new PropertyValueFactory<>("andar"));
-
-        columnDepartamento = new TableColumn<>("Departamento");
-        columnDepartamento.setPrefWidth(100);
-        columnDepartamento.setCellValueFactory(new PropertyValueFactory<>("departamento"));
-
-        columnSetor = new TableColumn<>("Setor");
-        columnSetor.setPrefWidth(100);
-        columnSetor.setCellValueFactory(new PropertyValueFactory<>("setor"));
-
-        TableColumn<Monitor, String> columnLocalizacao = new TableColumn<>("Localização");
-        columnLocalizacao.setPrefWidth(300);
-        columnLocalizacao.getColumns().addAll(columnAndar,columnDepartamento,columnSetor);
-
-        columnMarca = new TableColumn<>("Marca");
-        columnMarca.setPrefWidth(100);
-        columnMarca.setCellValueFactory(new PropertyValueFactory<>("marca"));
-
-        columnModelo = new TableColumn<>("Modelo");
-        columnModelo.setPrefWidth(100);
-        columnModelo.setCellValueFactory(new PropertyValueFactory<>("modelo"));
-
-        TableColumn<Monitor,String> columnFornecedor = new TableColumn<>("Maquina");
-        columnFornecedor.setPrefWidth(200);
-        columnFornecedor.getColumns().addAll(columnMarca,columnModelo);
-
-        columnObservacao = new TableColumn<>("Observação");
-        columnObservacao.setPrefWidth(150);
-        columnObservacao.setCellValueFactory(new PropertyValueFactory<>("obs"));
-
-        columnStatus = new TableColumn<>("Status");
-        columnStatus.setPrefWidth(100);
-        columnStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-
-
-        TableView tableV = new TableView();
-        tableV.getColumns().addAll(columnTipo,columnIdentificacao,columnLocalizacao,columnFornecedor,columnObservacao,columnStatus);
+        // ,columnIdentificacao,columnLocalizacao,columnFornecedor,columnObservacao,columnStatus
+        TableView<Monitor> tableV = new TableView();
+        tableV.getColumns().addAll(columnTipo);
         tableV.setEditable(true);
+        tableV.setItems(DMonitor.obterMonitor()); //.addAll(DMonitor.obterMonitor());
 
         return tableV;
     }
