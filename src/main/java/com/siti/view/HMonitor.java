@@ -5,13 +5,18 @@ import com.siti.model.Monitor;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.skin.VirtualFlow;
 import javafx.scene.layout.*;
 import javafx.util.Callback;
+
+import java.util.Set;
 
 public class HMonitor {
 
@@ -20,8 +25,6 @@ public class HMonitor {
     static Separator horizontal = new Separator(Orientation.HORIZONTAL);
 
     static TabPane tab;
-    static Tab ativos,estoque,sucata,manutancao;
-
     public static ComboBox<String> cbModelo;
     public static ComboBox<String> cbMarca;
     public static TextField txfPatrimonio;
@@ -57,9 +60,9 @@ public class HMonitor {
         departamento.setPrefWidth(180);
         departamento.setPromptText("Departamento");
         departamento.getItems().addAll("Laboratorios","Direcao");
-        departamento.getSelectionModel().selectedItemProperty().addListener((options,oldValue,newValue) ->{
-            System.out.println(newValue);
-        });
+        departamento.getSelectionModel().selectedItemProperty().addListener((observable -> {
+            departamento.setPromptText(columnDepartamento.getText());
+        }));
 
         setor = new ComboBox<>(); // Adicionar na h4
         setor.setPrefWidth(180);
@@ -184,14 +187,11 @@ public class HMonitor {
         columnTipo = new TableColumn<>("Tipo");
         columnTipo.setPrefWidth(100);
         columnTipo.setCellValueFactory(data-> {
-            if(data.getValue() != null)
-
+            if (data.getValue() != null) {
                 return new SimpleStringProperty(data.getValue().getTipo()); // Capturando o dado da base da dados e jogando na tabela
-
-            else
-
+            } else {
                 return new SimpleStringProperty("<NO DATA TYPE>"); // Caso não exista o tipo ele retorna no data type
-
+            }
         });
 
 
@@ -339,14 +339,21 @@ public class HMonitor {
 
 
 
+
+
         TableView<Monitor> tableV = new TableView();
         tableV.getColumns().addAll(columnTipo,columnIdentificacao,columnLocalizacao,columnFornecedor,columnObservacao,columnStatus);
         tableV.setEditable(true);
         tableV.setItems(DMonitor.obterMonitor());
 
-
         return tableV;
     }
+
+    /**
+     * @param table as inserted
+     * @param orientation vertical or horizontal
+     * @return a scrollbar
+     * */
 
     //endregion
 
@@ -393,20 +400,23 @@ public class HMonitor {
     /**
      * @return box with tableviews and details of item
      * */
-    public static HBox tabs(){
+    public static VBox tabs(){
 
-        ScrollBar scroll = fi
-        scroll.setVisible(true);
+        ScrollPane sp = new ScrollPane();
+        sp.setContent(table());
+        sp.setPrefSize(1320,320);
+        sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        sp.setPadding(new Insets(0,0,0,30));
+        sp.setStyle("-fx-border-color: black");
 
-        Tab ativos = new Tab();
-        ativos.setClosable(false);
-        ativos.setContent(table());
 
-        tab = new TabPane();
-        tab.getTabs().add(ativos);
+        HBox box1 = new HBox(10);
+        box1.getChildren().addAll(sp, new Separator(Orientation.VERTICAL),detalhe());
+        box1.setPadding(new Insets(20,0,0,0));
 
-        HBox box = new HBox(10);
-        box.getChildren().addAll(tab,scroll,new Separator(Orientation.VERTICAL),detalhe());
+        VBox box = new VBox();
+        box.getChildren().addAll(new Separator(Orientation.HORIZONTAL), box1);
+        box.setPadding(new Insets(0,0,0,0));
         return box;
     }
 

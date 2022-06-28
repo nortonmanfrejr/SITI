@@ -116,11 +116,7 @@ public class MainHUD {
         hbuttons.setPadding(new Insets(5,0,10,10));
         hbuttons.getChildren().addAll(vbuttons, vertical);
 
-        // count box
 
-        HBox countBox = new HBox();
-        countBox.getChildren().addAll(new Separator(Orientation.VERTICAL));
-        bp.setRight(countBox);
 
         bp.setLeft(hbuttons);
         return bp;
