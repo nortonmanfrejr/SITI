@@ -15,25 +15,88 @@ import java.sql.SQLException;
 public class DMonitor {
 
 
-//
-//    static String createCommand = "INSERT INTO tbmonitor (?,?,?,?,?,?,?,?,?,?)," +
-//            "VALUES "
-
-
-    static PreparedStatement pst = null;
-    static ResultSet rs = null;
-
-
-
-
-    //#region insert region
+    //#region obter  monitor
     /**
-     * insert data into tbMonitor, case table not exists he create the table.
-     * @return true boolean
+     * @return a observable list of monitors.
      * */
-    public static boolean createCommand(){
+    public static ObservableList<Monitor> obterMonitor(){
 
-        String createCommand = "INSERT INTO tbmonitor(" +
+        ObservableList<Monitor> monitors = FXCollections.observableArrayList();
+        ResultSet rs = null;
+        PreparedStatement pst = null;
+
+        String command1 = "SELECT * FROM tbMonitor WHERE patrimonio = ?";
+        String command2 = "SELECT * FROM tbMonitor WHERE servicetag = ?";
+
+        try {
+
+
+            pst = ConnectionFactory.getConnection().prepareStatement(command1);
+            rs = pst.executeQuery();
+
+
+            while(rs.next()){
+
+                // jogando para detalhes
+
+                HMonitor.lblTipo.setText(HMonitor.lblTipo.getText() + rs.getString("tipo"));
+                HMonitor.lblPatrimonio.setText(HMonitor.lblPatrimonio.getText() + rs.getInt("patrimonio"));
+                HMonitor.lblServicetag.setText(HMonitor.lblServicetag.getText() + rs.getString("servicetag"));
+                HMonitor.lblAndar.setText(HMonitor.lblAndar.getText() + rs.getString("andar"));
+                HMonitor.lblDepartamento.setText(HMonitor.lblDepartamento.getText() + rs.getString("departamento"));
+                HMonitor.lblSetor.setText(HMonitor.lblSetor.getText() + rs.getString("setor"));
+                HMonitor.lblMarca.setText(HMonitor.lblMarca.getText() + rs.getString("marca"));
+                HMonitor.lblModelo.setText(HMonitor.lblModelo.getText() + rs.getString("modelo"));
+                HMonitor.lblObs.setText(HMonitor.lblObs.getText() + rs.getString("observacao"));
+                HMonitor.lblStatus.setText(HMonitor.lblStatus.getText() + rs.getString("estado"));
+
+                monitors.add(new Monitor(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getString(12)));
+
+                HMonitor.tableV.setItems(monitors);
+
+            }
+
+
+        } catch (SQLException e) {
+
+            throw new RuntimeException(e);
+
+        } finally {
+
+            ConnectionFactory.closeConnection();
+
+        }
+
+        return monitors;
+    }
+
+    //endregion
+
+
+    //#region criar monitor
+
+    /**
+     * Create monitor data and casa not exists tbMonitor he create.
+     * */
+    public static Boolean createMonitor(){
+
+        PreparedStatement pst = null;
+
+        ConnectionFactory.tbMonitor(); // Função para criar a tbMonitor
+
+        String command = "INSERT INTO tbMonitor(" +
                 "patrimonio," +
                 "servicetag," +
                 "marca," +
@@ -43,14 +106,13 @@ public class DMonitor {
                 "ajustavel," +
                 "andar," +
                 "observacao," +
-                "tipo)" +
-                "VALUES (?,?,?,?,?,?,?,?,?,?)";
-
-        ConnectionFactory.tbMonitor();
+                "tipo," +
+                "estado)" +
+                "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
         try {
 
-            pst = ConnectionFactory.getConnection().prepareStatement(createCommand);
+            pst = ConnectionFactory.getConnection().prepareStatement(command);
 
             pst.setInt(1, Integer.parseInt(HMonitor.txfPatrimonio.getText()));
             pst.setString(2, HMonitor.txfservicetag.getText());
@@ -62,90 +124,23 @@ public class DMonitor {
             pst.setString(8, HMonitor.cbAndar.getSelectionModel().getSelectedItem().toString());
             pst.setString(9, HMonitor.observacao.getText());
             pst.setString(10, MainHUD.tipo.getValue().toString());
+            pst.setString(11, MainHUD.estado.getValue().toString());
 
             int create = pst.executeUpdate();
 
-        } catch (SQLException e) {
-
-            Display.display("Erro de inserção","Ocorreu um erro de inserção \n " + e);
-
-        } finally {
-
-            ConnectionFactory.closeConnection();
-
-        }
-
-        return true;
-
-    }
-
-    //endregion
-
-
-    //#region select region
-
-    /**
-     * obtain all monitors in a observable list
-     * @return a observable list with contains all monitors
-     * */
-    public static ObservableList<Monitor> obtainAll(){
-
-        ObservableList<Monitor> list = FXCollections.observableArrayList();
-
-        String command = "SELECT * FROM tbmonitor WHERE patrimonio = ?";
-
-        try {
-
-            ConnectionFactory.getConnection();
-            pst = ConnectionFactory.getConnection().prepareStatement(command);
-            rs = pst.executeQuery();
-
-
-
-            while(rs.next()) {
-                /**
-                 * Inserindo os dados nos labels de detalhes.
-                 * */
-                HMonitor.lblTipo.setText(HMonitor.lblTipo.getText() + rs.getString("tipo"));
-                HMonitor.lblPatrimonio.setText(HMonitor.lblPatrimonio.getText() + rs.getInt("patrimonio"));
-                HMonitor.lblServicetag.setText(HMonitor.lblServicetag.getText() + rs.getString("servicetag"));
-                HMonitor.lblAndar.setText(HMonitor.lblAndar.getText() + rs.getString("andar"));
-                HMonitor.lblDepartamento.setText(HMonitor.lblDepartamento.getText() + rs.getString("departamento"));
-                HMonitor.lblSetor.setText(HMonitor.lblSetor.getText() + rs.getString("setor"));
-                HMonitor.lblMarca.setText(HMonitor.lblMarca.getText() + rs.getString("marca"));
-                HMonitor.lblModelo.setText(HMonitor.lblModelo.getText() + rs.getString("modelo"));
-                HMonitor.lblObs.setText(HMonitor.lblObs.getText() + rs.getString("observacao"));
-                HMonitor.lblStatus.setText(HMonitor.lblStatus.getText() + rs.getString("status"));
-
-                /**
-                 * Inserindo na table view.
-                 * */
-                list.add(new Monitor(
-                        rs.getLong("id"),
-                        rs.getInt("patrimonio"),
-                        rs.getString("servicetag"),
-                        rs.getString("marca"),
-                        rs.getString("modelo"),
-                        rs.getString("departamento"),
-                        rs.getString("setor"),
-                        rs.getString("ajustavel"),
-                        rs.getString("andar"),
-                        rs.getString("observacao"),
-                        rs.getString("tipo")
-                ));
-            }
-            HMonitor.tableV.setItems(list);
-        } catch (Exception e){
+        } catch (Exception e) {
 
             throw new RuntimeException(e);
 
         } finally {
+
             ConnectionFactory.closeConnection();
+
         }
 
-        return list;
-    }
 
+        return true;
+    }
 
     //endregion
 

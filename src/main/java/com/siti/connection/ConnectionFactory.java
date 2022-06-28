@@ -44,7 +44,9 @@ public class ConnectionFactory {
         if(connect != null) {
 
             try {
+
                 connect.close();
+
             } catch (SQLException e) {
 
                 Display.display("Error", String.format("Error ==== %s", e));
@@ -70,7 +72,8 @@ public class ConnectionFactory {
                 "    ajustavel VARCHAR (5),\n" +
                 "    andar VARCHAR(30),\n" +
                 "    observacao TEXT,\n" +
-                "    tipo VARCHAR(20)" +
+                "    tipo VARCHAR(20),\n" +
+                "    estado VARCHAR(30)" +
                 ")";
         try {
 
@@ -107,7 +110,9 @@ public class ConnectionFactory {
             Display.display("Not found",String.format("Server not found, %s", e));
 
         } finally {
+
             closeConnection();
+
         }
 
     }

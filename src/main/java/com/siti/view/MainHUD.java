@@ -19,38 +19,34 @@ public class MainHUD {
     static Separator vertical = new Separator(Orientation.VERTICAL);
     static Separator horizontal = new Separator(Orientation.HORIZONTAL);
     public static ComboBox<String> tipo;
+    public static ComboBox<String> estado;
 
 
 
     /**
      * @return create data button.
      * */
-    private static Button create(){
+    private static Button create() {
         Button b = new Button("Create...");
         b.setPrefWidth(100);
-
         b.setOnAction(e -> {
-            if (tipo.getValue().equals("Monitor")) {
-                DMonitor.createCommand();
-            }
+            DMonitor.createMonitor();
         });
+
         return b;
     }
+        /**
+         * @return read data button.
+         * */
+        private static Button read() {
+            Button b = new Button("Read...");
+            b.setPrefWidth(100);
+            b.setOnAction(e -> {
+                DMonitor.obterMonitor();
+            });
 
-    /**
-     * @return read data button.
-     * */
-    private static Button read(){
-        Button b = new Button("Read...");
-        b.setPrefWidth(100);
-        b.setOnAction(e -> {
-            e.consume();
-            obterMonitor();
-//            DMonitor.obtainAll();
-        });
-        return b;
+            return b;
     }
-
     /**
      * @return update data button.
      * */
@@ -108,13 +104,13 @@ public class MainHUD {
                     }
                 });
 
-        ComboBox<String> status = new ComboBox<>();
-        status.getItems().addAll("Ativo","Estoque","Sucata","Manutenção");
-        status.setPrefWidth(100);
+        estado = new ComboBox<>();
+        estado.getItems().addAll("Ativo","Estoque","Sucata","Manutenção");
+        estado.setPrefWidth(100);
 
         // button boxes
         VBox vbuttons = new VBox(10);
-        vbuttons.getChildren().addAll(create(),read(),update(),delete(),horizontal,tipo,status,xlsExport());
+        vbuttons.getChildren().addAll(create(),read(),update(),delete(),horizontal,tipo,estado,xlsExport());
         HBox hbuttons = new HBox(10);
         hbuttons.setPadding(new Insets(5,0,10,10));
         hbuttons.getChildren().addAll(vbuttons, vertical);

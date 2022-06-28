@@ -6,7 +6,7 @@ public class Monitor extends HMonitor {
 
     //#region atributos
 
-    public Long id;
+    public Integer id;
     public Integer patrimonio;
     public String servicetag;
     public String marca;
@@ -17,11 +17,13 @@ public class Monitor extends HMonitor {
     public String andar;
     public String observacao;
     public String tipo;
+
+    public String estado;
     //endregion
 
     //#region construtor
 
-    public Monitor(Long id,
+    public Monitor(Integer id,
                    Integer patrimonio,
                    String servicetag,
                    String marca,
@@ -31,7 +33,8 @@ public class Monitor extends HMonitor {
                    String ajustavel,
                    String andar,
                    String observacao,
-                   String tipo){
+                   String tipo,
+                   String estado){
         this.id = id;
         this.patrimonio = patrimonio;
         this.servicetag = servicetag;
@@ -43,17 +46,43 @@ public class Monitor extends HMonitor {
         this.andar = andar;
         this.observacao = observacao;
         this.tipo = tipo;
+        this.estado = estado;
+
+    }
+
+    public Monitor(Integer patrimonio,
+                   String servicetag,
+                   String marca,
+                   String modelo,
+                   String departamento,
+                   String setor,
+                   String ajustavel,
+                   String andar,
+                   String observacao,
+                   String tipo,
+                   String estado){
+        this.patrimonio = patrimonio;
+        this.servicetag = servicetag;
+        this.marca = marca;
+        this.modelo = modelo;
+        this.departamento = departamento;
+        this.setor = setor;
+        this.ajustavel = ajustavel;
+        this.andar = andar;
+        this.observacao = observacao;
+        this.tipo = tipo;
+        this.estado = estado;
 
     }
     //endregion
 
     //#region getters && setters
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -135,6 +164,14 @@ public class Monitor extends HMonitor {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     //endregion
