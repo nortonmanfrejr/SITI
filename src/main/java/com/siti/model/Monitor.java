@@ -7,7 +7,7 @@ public class Monitor extends HMonitor {
     //#region atributos
 
     public Integer id;
-    public Integer patrimonio;
+    public String patrimonio;
     public String servicetag;
     public String marca;
     public String modelo;
@@ -23,7 +23,7 @@ public class Monitor extends HMonitor {
     //#region construtor
 
     public Monitor(Integer id,
-                   Integer patrimonio,
+                   String patrimonio,
                    String servicetag,
                    String marca,
                    String modelo,
@@ -49,7 +49,7 @@ public class Monitor extends HMonitor {
 
     }
 
-    public Monitor(Integer patrimonio,
+    public Monitor(String patrimonio,
                    String servicetag,
                    String marca,
                    String modelo,
@@ -89,11 +89,11 @@ public class Monitor extends HMonitor {
         this.id = id;
     }
 
-    public Integer getPatrimonio() {
+    public String getPatrimonio() {
         return patrimonio;
     }
 
-    public void setPatrimonio(Integer patrimonio) {
+    public void setPatrimonio(String patrimonio) {
         this.patrimonio = patrimonio;
     }
 

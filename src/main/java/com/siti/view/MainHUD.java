@@ -16,6 +16,7 @@ public class MainHUD {
 
 
 
+    static BorderPane bp;
     static Separator vertical = new Separator(Orientation.VERTICAL);
     static Separator horizontal = new Separator(Orientation.HORIZONTAL);
     public static ComboBox<String> tipo;
@@ -42,7 +43,7 @@ public class MainHUD {
             Button b = new Button("Read...");
             b.setPrefWidth(100);
             b.setOnAction(e -> {
-                DMonitor.obterMonitor().toArray();
+                bp.setBottom(HMonitor.tabs());
             });
 
             return b;
@@ -80,7 +81,7 @@ public class MainHUD {
      * */
     public static BorderPane hud(){
 
-        BorderPane bp = new BorderPane();
+        bp = new BorderPane();
 
 
         // combo box tipo tem de ser criado dentro do hud para que ocorra o efeito de troca de design da tela.

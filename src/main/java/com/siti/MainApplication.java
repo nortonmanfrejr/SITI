@@ -27,7 +27,7 @@ public class MainApplication extends Application {
     public void start(Stage stage) throws IOException {
         ConnectionFactory.getConnection();
         window = stage;
-        Scene scene = new Scene(new Group(), 1280, 600);
+        Scene scene = new Scene(new Group(), 1580, 600);
         window.setTitle("SITI....");
         window.setResizable(false);
 

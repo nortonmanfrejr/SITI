@@ -63,17 +63,17 @@ public class ConnectionFactory {
 
         String command = "CREATE TABLE IF NOT EXISTS tbMonitor (\n" +
                 "    id INTEGER PRIMARY KEY AUTO_INCREMENT,\n" +
-                "    patrimonio INTEGER UNIQUE,\n" +
-                "    serviceTag TEXT UNIQUE,\n" +
-                "    marca VARCHAR (20),\n" +
-                "    modelo VARCHAR (50),\n" +
+                "    patrimonio VARCHAR(30) UNIQUE,\n" +
+                "    serviceTag TEXT UNIQUE NOT NULL,\n" +
+                "    marca VARCHAR (20) NOT NULL,\n" +
+                "    modelo VARCHAR (50) NOT NULL,\n" +
                 "    departamento VARCHAR (50),\n" +
                 "    setor VARCHAR (30),\n" +
-                "    ajustavel VARCHAR (5),\n" +
-                "    andar VARCHAR(30),\n" +
+                "    ajustavel VARCHAR (5) NOT NULL,\n" +
+                "    andar VARCHAR(30) NOT NULL,\n" +
                 "    observacao TEXT,\n" +
-                "    tipo VARCHAR(20),\n" +
-                "    estado VARCHAR(30)" +
+                "    tipo VARCHAR(20) NOT NULL,\n" +
+                "    estado VARCHAR(30) NOT NULL" +
                 ")";
         try {
 

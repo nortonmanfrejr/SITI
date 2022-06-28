@@ -41,7 +41,7 @@ public class DMonitor {
                 Monitor monitor = new Monitor();
 
                 monitor.setId(rs.getInt("id"));
-                monitor.setPatrimonio(rs.getInt("patrimonio"));
+                monitor.setPatrimonio(rs.getString("patrimonio"));
                 monitor.setServicetag(rs.getString("serviceTag"));
                 monitor.setMarca(rs.getString("marca"));
                 monitor.setModelo(rs.getString("modelo"));
@@ -104,7 +104,7 @@ public class DMonitor {
 
             pst = ConnectionFactory.getConnection().prepareStatement(command);
 
-            pst.setInt(1, Integer.parseInt(HMonitor.txfPatrimonio.getText()));
+            pst.setString(1, HMonitor.txfPatrimonio.getText());
             pst.setString(2, HMonitor.txfservicetag.getText());
             pst.setString(3, HMonitor.cbMarca.getSelectionModel().getSelectedItem().toString());
             pst.setString(4, HMonitor.cbModelo.getSelectionModel().getSelectedItem().toString());
