@@ -22,7 +22,7 @@ public class Display {
 
     //#region Display
     static boolean answer;
-    public static Boolean display(String title, String message){
+    public static Boolean validDisplay(String title, String message){
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
@@ -34,26 +34,20 @@ public class Display {
         Label lMessage = new Label();
         lMessage.setText(message);
 
-        //#region Botões de display
-
-        //#region Botão de Sim
         Button yesButton = new Button("Sim...");
         yesButton.setOnAction(e -> {
             answer = true;
             window.close();
         });
-        //endregion
 
-        //#region Botão de Não
+
         Button noButton = new Button("Não...");
         noButton.setOnAction(e -> {
             answer = false;
             window.close();
         });
 
-        //endregion
 
-        //endregion
 
         HBox box1 = new HBox(10);
         box1.getChildren().addAll(yesButton, noButton);
@@ -70,6 +64,40 @@ public class Display {
         window.showAndWait();
 
         return answer;
+    }
+
+    public static Boolean confirmDisplay(String title, String message){
+
+        Stage window = new Stage();
+
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle(title);
+        window.setMinWidth(200);
+        window.setMinHeight(150);
+        window.setResizable(false);
+
+        Label lMessage = new Label();
+        lMessage.setText(message);
+        lMessage.setAlignment(Pos.CENTER);
+
+        Button okButton = new Button("Ok...");
+        okButton.setOnAction(e -> {
+            answer = true;
+            window.close();
+        });
+
+
+        VBox box = new VBox(10);
+        box.getChildren().addAll(lMessage, okButton);
+        box.setAlignment(Pos.CENTER);
+
+
+        Scene sceneLayout = new Scene(box);
+        window.setScene(sceneLayout);
+        window.showAndWait();
+
+        return answer;
+
     }
 
     //endregion

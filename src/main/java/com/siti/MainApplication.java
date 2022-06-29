@@ -48,7 +48,7 @@ public class MainApplication extends Application {
 
 
     private void close(){
-        Boolean answer = Display.display("Encerrar","Deseja encerrar a aplicação?");
+        Boolean answer = Display.validDisplay("Encerrar","Deseja encerrar a aplicação?");
         if (answer)
             window.close();
     }

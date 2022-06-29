@@ -2,6 +2,7 @@ package com.siti.dao;
 
 import com.siti.connection.ConnectionFactory;
 import com.siti.model.Monitor;
+import com.siti.service.Display;
 import com.siti.view.HMonitor;
 import com.siti.view.MainHUD;
 import javafx.collections.FXCollections;
@@ -16,7 +17,7 @@ import java.util.List;
 public class DMonitor {
 
 
-    //#region obter  monitor
+    //#region obter  todos monitores
     /**
      * @return a observable list of monitors.
      */
@@ -54,14 +55,13 @@ public class DMonitor {
                 monitor.setEstado(rs.getString("estado"));
 
                 monitors.add(monitor);
-                System.out.println("teste = " + monitor);
 
             }
 
 
         } catch (SQLException e) {
 
-            throw new RuntimeException(e);
+            Display.confirmDisplay("Erro","Erro: " + e);
 
         } finally {
 
@@ -73,6 +73,8 @@ public class DMonitor {
     }
 
     //endregion
+
+
 
 
     //#region criar monitor
@@ -120,7 +122,7 @@ public class DMonitor {
 
         } catch (Exception e) {
 
-            throw new RuntimeException(e);
+            Display.confirmDisplay("Erro","Erro: " + e);
 
         } finally {
 

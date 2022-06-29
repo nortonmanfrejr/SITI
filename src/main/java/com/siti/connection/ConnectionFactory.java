@@ -27,9 +27,9 @@ public class ConnectionFactory {
             connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbSITI","root","");
             return connect;
 
-        } catch (SQLException error){
+        } catch (SQLException e){
 
-            Display.display("Error",String.format("Erro ao acessar o banco de dados: %s", error));
+            Display.confirmDisplay("Erro","Erro: " + e);
 
         }
 
@@ -49,10 +49,12 @@ public class ConnectionFactory {
 
             } catch (SQLException e) {
 
-                Display.display("Error", String.format("Error ==== %s", e));
+                Display.confirmDisplay("Erro","Erro: " + e);
+
             }
 
         }
+
     }
 
 
@@ -83,7 +85,7 @@ public class ConnectionFactory {
 
         } catch (Exception e) {
 
-            Display.display("Not found", "Server not found");
+            Display.confirmDisplay("Erro","Erro: " + e);
 
         } finally {
 
@@ -107,7 +109,7 @@ public class ConnectionFactory {
 
         } catch (Exception e){
 
-            Display.display("Not found",String.format("Server not found, %s", e));
+            Display.confirmDisplay("Erro","Erro: " + e);
 
         } finally {
 

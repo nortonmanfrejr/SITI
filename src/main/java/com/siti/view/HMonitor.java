@@ -34,6 +34,7 @@ public class HMonitor {
     public static ComboBox<String> cbAjustavel;
     public static ComboBox<String> cbAndar;
     public static TextArea observacao;
+    public static TextField txfBuscar;
     //endregion
 
     //#region monitor main layout
@@ -60,9 +61,7 @@ public class HMonitor {
         departamento.setPrefWidth(180);
         departamento.setPromptText("Departamento");
         departamento.getItems().addAll("Laboratorios","Direcao");
-        departamento.getSelectionModel().selectedItemProperty().addListener((observable -> {
-            departamento.setPromptText(columnDepartamento.getText());
-        }));
+
 
         setor = new ComboBox<>(); // Adicionar na h4
         setor.setPrefWidth(180);
@@ -150,247 +149,25 @@ public class HMonitor {
         //endregion
 
         HBox box1 = new HBox(15);
-        box1.getChildren().addAll(v1,v2,v3,new Separator(Orientation.VERTICAL),new Separator(Orientation.VERTICAL));
+        box1.getChildren().addAll(v1,v2,v3,new Separator(Orientation.VERTICAL));
 
         Label monitores = new Label("Monitores");
         monitores.setPadding(new Insets(0,0,0,15));
         monitores.setStyle("-fx-font: 24 arial");
         monitores.setPrefHeight(50);
         monitores.setPrefWidth(130);
+        txfBuscar = new TextField();
+        txfBuscar.setPromptText("Buscar monitor");
+        txfBuscar.setPrefWidth(100);
+        txfBuscar.setPrefHeight(20);
+
+        HBox buscabox = new HBox();
+        buscabox.getChildren().addAll(txfBuscar, Buttons.buscar());
+        buscabox.setSpacing(10);
+        buscabox.setPadding(new Insets(0,0,0,15));
         VBox box = new VBox(5);
-        box.getChildren().addAll(monitores,new Separator(),box1);
+        box.getChildren().addAll(monitores,buscabox,new Separator(),box1);
         box.setPadding(new Insets(0,0,0,0));
-        return box;
-    }
-    //endregion
-
-    //#region Tables
-
-    public static TableView<Monitor> tableV;
-    public static TableColumn<Monitor, String> columnTipo; // tipo
-    public static TableColumn<Monitor, String> columnPatrimonio; // patrimonio
-    public static TableColumn<Monitor, String> columnST; // servicetag
-    public static TableColumn<Monitor, String> columnAndar; // andar
-    public static TableColumn<Monitor, String> columnDepartamento; // departamento
-    public static TableColumn<Monitor, String> columnSetor; // setor
-    public static TableColumn<Monitor,String> columnMarca; // marca
-    public static TableColumn<Monitor, String> columnModelo; // modelo
-    public static TableColumn<Monitor, String> columnObservacao; // obs
-    public static TableColumn<Monitor,String> columnStatus; // status
-    public static TableColumn<Monitor, String> columnAjustavel;
-
-    /**
-     * @return tableview contains all data monitors
-     * */
-    public static TableView<Monitor> table(){
-
-        columnTipo = new TableColumn<>("Tipo");
-        columnTipo.setPrefWidth(100);
-        columnTipo.setCellValueFactory(data-> {
-            if (data.getValue() != null) {
-                return new SimpleStringProperty(data.getValue().getTipo()); // Capturando o dado da base da dados e jogando na tabela
-            } else {
-                return new SimpleStringProperty("<NO DATA TYPE>"); // Caso não exista o tipo ele retorna no data type
-            }
-        });
-
-
-        columnPatrimonio = new TableColumn<>("Patrimonio");
-        columnPatrimonio.setPrefWidth(150);
-        columnPatrimonio.setCellValueFactory(data -> {
-            if(data.getValue() != null)
-
-                return new SimpleStringProperty(data.getValue().getPatrimonio());
-
-            else
-
-                return new SimpleStringProperty("<SEM PATRIMONIO>");
-
-        });
-
-        columnST = new TableColumn<>("Service Tag");
-        columnST.setPrefWidth(150);
-        columnST.setCellValueFactory(data -> {
-            if(data.getValue() != null)
-
-                return new SimpleStringProperty(data.getValue().getServicetag());
-
-            else
-
-                return new SimpleStringProperty("<SEM SERVICE TAG>");
-
-        });
-
-        TableColumn<Monitor, TableColumn> columnIdentificacao = new TableColumn<>("Identificação");
-        columnIdentificacao.setPrefWidth(300);
-        columnIdentificacao.getColumns().addAll(columnPatrimonio,columnST);
-
-        columnAndar = new TableColumn<>("Andar");
-        columnAndar.setPrefWidth(100);
-        columnAndar.setCellValueFactory(data -> {
-            if(data.getValue() != null)
-
-                return new SimpleStringProperty(data.getValue().getAndar());
-
-            else
-
-                return new SimpleStringProperty("<SEM ANDAR>");
-
-        });
-
-        columnDepartamento = new TableColumn<>("Departamento");
-        columnDepartamento.setPrefWidth(100);
-        columnDepartamento.setCellValueFactory(data -> {
-            if(data.getValue() != null)
-
-                return new SimpleStringProperty(data.getValue().getDepartamento());
-
-            else
-
-                return new SimpleStringProperty("<SEM DP>");
-
-        });
-
-        columnSetor = new TableColumn<>("Setor");
-        columnSetor.setPrefWidth(100);
-        columnSetor.setCellValueFactory(data -> {
-            if(data.getValue() != null)
-
-                return new SimpleStringProperty(data.getValue().getSetor());
-
-            else
-
-                return new SimpleStringProperty("<SEM SETOR>");
-
-        });
-
-        TableColumn<Monitor, String> columnLocalizacao = new TableColumn<Monitor, String>("Localização");
-        columnLocalizacao.setPrefWidth(300);
-        columnLocalizacao.getColumns().addAll(columnAndar,columnDepartamento,columnSetor);
-
-        columnMarca = new TableColumn<>("Marca");
-        columnMarca.setPrefWidth(100);
-        columnMarca.setCellValueFactory(data -> {
-            if(data.getValue() != null)
-
-                return new SimpleStringProperty(data.getValue().getMarca());
-
-            else
-
-                return new SimpleStringProperty("<SEM MARCA>");
-
-        });
-
-        columnModelo = new TableColumn<>("Modelo");
-        columnModelo.setPrefWidth(100);
-        columnModelo.setCellValueFactory(data ->{
-            if(data.getValue() != null)
-
-                return new SimpleStringProperty(data.getValue().modelo);
-
-            else
-
-                return new SimpleStringProperty("<SEM MODELO>");
-
-        });
-
-        columnAjustavel = new TableColumn<>("Ajustavel");
-        columnAjustavel.setPrefWidth(100);
-        columnAjustavel.setCellValueFactory(data -> {
-            if(data.getValue() != null)
-
-                return new SimpleStringProperty(data.getValue().getAjustavel());
-
-            else
-
-                return new SimpleStringProperty("<NULL>");
-
-        });
-
-        TableColumn<Monitor,String> columnFornecedor = new TableColumn<Monitor, String>("Maquina");
-        columnFornecedor.setPrefWidth(300);
-        columnFornecedor.getColumns().addAll(columnMarca,columnModelo,columnAjustavel);
-
-        columnObservacao = new TableColumn<>("Observação");
-        columnObservacao.setPrefWidth(150);
-        columnObservacao.setCellValueFactory(data -> {
-            if(data.getValue() != null)
-
-                return new SimpleStringProperty(data.getValue().getObservacao());
-
-            else
-
-                return new SimpleStringProperty("SEM OBSERVAÇÃO");
-
-        });
-
-        columnStatus = new TableColumn<>("Status");
-        columnStatus.setPrefWidth(100);
-        columnStatus.setCellValueFactory(data -> {
-            if(data.getValue() != null)
-
-                return new SimpleStringProperty(data.getValue().getEstado());
-
-            else
-
-                return new SimpleStringProperty("<SEM ESTADO>");
-
-        });
-
-
-
-
-
-        TableView<Monitor> tableV = new TableView();
-        tableV.getColumns().addAll(columnTipo,columnIdentificacao,columnLocalizacao,columnFornecedor,columnObservacao,columnStatus);
-        tableV.setEditable(true);
-        tableV.setItems(DMonitor.obterMonitor());
-
-        return tableV;
-    }
-
-    /**
-     * @param table as inserted
-     * @param orientation vertical or horizontal
-     * @return a scrollbar
-     * */
-
-    //endregion
-
-    //#region detalhes
-
-    public static Label lblTipo, lblPatrimonio, lblServicetag,
-                        lblAndar, lblDepartamento, lblSetor,
-                        lblMarca, lblModelo, lblObs, lblStatus;
-
-    /**
-     * @return box de detalhes dos itens, é um suporte para o callback tambem.
-     * */
-    private static VBox detalhe(){
-
-        lblTipo = new Label("Tipo: ");
-        lblPatrimonio = new Label("Patrimonio: ");
-        lblServicetag = new Label("Service Tag: ");
-        lblAndar = new Label("Andar: ");
-        lblDepartamento = new Label("Departamento: ");
-        lblSetor = new Label("Setor: ");
-        lblMarca = new Label("Marca: ");
-        lblModelo = new Label("Modelo: ");
-        lblObs = new Label("Observação: ");
-        lblStatus = new Label("Status: ");
-
-        VBox box = new VBox(10);
-        box.getChildren().addAll(
-                lblTipo,
-                lblPatrimonio,
-                lblServicetag,
-                lblAndar,
-                lblDepartamento,
-                lblSetor,
-                lblMarca,
-                lblModelo,
-                lblStatus,
-                lblObs);
         return box;
     }
     //endregion
@@ -403,15 +180,15 @@ public class HMonitor {
     public static VBox tabs(){
 
         ScrollPane sp = new ScrollPane();
-        sp.setContent(table());
-        sp.setPrefSize(1320,320);
+        sp.setContent(Informations.monitorTable());
+        sp.setPrefSize(960,320);
         sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         sp.setPadding(new Insets(0,0,0,30));
         sp.setStyle("-fx-border-color: black");
 
 
         HBox box1 = new HBox(10);
-        box1.getChildren().addAll(sp, new Separator(Orientation.VERTICAL),detalhe());
+        box1.getChildren().addAll(sp, new Separator(Orientation.VERTICAL),Details.detalhe());
         box1.setPadding(new Insets(20,0,0,0));
 
         VBox box = new VBox();
