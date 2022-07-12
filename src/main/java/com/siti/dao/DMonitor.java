@@ -21,7 +21,7 @@ public class DMonitor {
     /**
      * @return a observable list of monitors.
      */
-    public static ObservableList<Monitor> obterMonitor(){
+    public static ObservableList<Monitor> obterLista(){
 
         ObservableList<Monitor> monitors = FXCollections.observableArrayList();
 
@@ -74,6 +74,64 @@ public class DMonitor {
 
     //endregion
 
+
+    //#region obter 1 monitor
+    /**
+     * @return a observable list of monitors.
+     */
+    public static ObservableList<Monitor> obterIdentificacao(String str){
+
+        ObservableList<Monitor> monitors = FXCollections.observableArrayList();
+
+        ConnectionFactory.getConnection();
+        ResultSet rs = null;
+        PreparedStatement pst = null;
+        String command = "SELECT * FROM tbMonitor WHERE patrimonio LIKE '%" + str +"%' OR servicetag LIKE '%" + str + "%';";
+
+        try {
+
+
+            pst = ConnectionFactory.getConnection().prepareStatement(command);
+            rs = pst.executeQuery();
+
+
+            while(rs.next()){
+
+
+                Monitor monitor = new Monitor();
+
+                monitor.setId(rs.getInt("id"));
+                monitor.setPatrimonio(rs.getString("patrimonio"));
+                monitor.setServicetag(rs.getString("serviceTag"));
+                monitor.setMarca(rs.getString("marca"));
+                monitor.setModelo(rs.getString("modelo"));
+                monitor.setDepartamento(rs.getString("departamento"));
+                monitor.setSetor(rs.getString("setor"));
+                monitor.setAjustavel(rs.getString("ajustavel"));
+                monitor.setAndar(rs.getString("andar"));
+                monitor.setObservacao(rs.getString("observacao"));
+                monitor.setTipo(rs.getString("tipo"));
+                monitor.setEstado(rs.getString("estado"));
+
+                monitors.add(monitor);
+
+
+            }
+
+
+        } catch (SQLException e) {
+
+            Display.confirmDisplay("Erro","Erro: " + e);
+
+        } finally {
+
+            ConnectionFactory.closeConnection();
+
+        }
+
+        return monitors;
+    }
+    //endregion
 
 
 

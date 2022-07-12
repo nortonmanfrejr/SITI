@@ -6,18 +6,18 @@ public class Monitor extends HMonitor {
 
     //#region atributos
 
-    public Integer id;
-    public String patrimonio;
-    public String servicetag;
-    public String marca;
-    public String modelo;
-    public String departamento;
-    public String setor;
-    public String ajustavel;
-    public String andar;
-    public String observacao;
-    public String tipo;
-    public String estado;
+    private Integer id;
+    private String patrimonio;
+    private String servicetag;
+    private String marca;
+    private String modelo;
+    private String departamento;
+    private String setor;
+    private String ajustavel;
+    private String andar;
+    private String observacao;
+    private String tipo;
+    private String estado;
     //endregion
 
     //#region construtor

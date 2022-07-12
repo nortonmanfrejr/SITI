@@ -5,6 +5,8 @@ import com.siti.repository.MonitorRepository;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
+import static com.siti.view.Informations.tableV;
+
 public class Buttons {
 
 
@@ -27,8 +29,9 @@ public class Buttons {
         Button b = new Button("Create...");
         b.setPrefWidth(100);
         b.setOnAction(e -> {
+
             DMonitor.createMonitor();
-            DMonitor.obterMonitor();
+            Informations.attTable();
         });
 
         return b;
@@ -40,11 +43,7 @@ public class Buttons {
         Button b = new Button("Read...");
         b.setPrefWidth(100);
         b.setOnAction( e -> {
-
-
-            System.out.println(MonitorRepository.obterUnico(HMonitor.txfBuscar.getText()));
-//            Informations.monitorTable().setItems(MonitorRepository.obterUnico(identificador));
-
+           Informations.attTable();
         });
 
         return b;

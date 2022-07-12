@@ -42,10 +42,13 @@ public class MainHUD {
                 selectedItemProperty().
                 addListener((options,oldValue,newValue) -> {
                     if(newValue.equals("Monitor")){
+
                         bp.setCenter(HMonitor.monitor());
-                        bp.setBottom(HMonitor.tabs());
+
                     } else if (newValue.equals("Computador")) {
-                      Display.confirmDisplay("Computer not created", "Computer not created");
+
+                        bp.setCenter(HComputer.computer());
+
                     } else if (newValue.equals("Conjunto")) {
                         Display.confirmDisplay("Create a new couple?", "Create a new couple?");
                     } else if (newValue.equals("Ferramenta")) {

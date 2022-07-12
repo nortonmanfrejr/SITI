@@ -160,6 +160,10 @@ public class HMonitor {
         txfBuscar.setPromptText("Buscar monitor");
         txfBuscar.setPrefWidth(100);
         txfBuscar.setPrefHeight(20);
+        txfBuscar.setOnAction(e -> {
+            e.consume();
+            System.out.println(DMonitor.obterIdentificacao(txfBuscar.getText()));
+        });
 
         HBox buscabox = new HBox();
         buscabox.getChildren().addAll(txfBuscar, Buttons.buscar());

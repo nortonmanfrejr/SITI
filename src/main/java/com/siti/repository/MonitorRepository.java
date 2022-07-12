@@ -15,12 +15,12 @@ public class MonitorRepository {
      * @return lista de monitores.
      * */
     public static ObservableList<Monitor> obterTodos(){
-        return DMonitor.obterMonitor();
+        return DMonitor.obterLista();
     }
 
     public static Optional<Monitor> obterUnico(String identificador){
 
-        ObservableList<Monitor> monitors = FXCollections.observableArrayList(DMonitor.obterMonitor());
+        ObservableList<Monitor> monitors = FXCollections.observableArrayList(DMonitor.obterLista());
 
 
         return monitors.stream()
